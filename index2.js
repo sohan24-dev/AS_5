@@ -7,6 +7,7 @@ allbtn.forEach((clickBtn, index) => {
             document.getElementById(btnRemove).classList.remove('btn-primary')
         );
         document.getElementById(clickBtn).classList.add('btn-primary');
+        upDatecount(clickBtn)
         allContainer.forEach(show =>
             document.getElementById(show).classList.add("hidden")
         );
@@ -23,6 +24,7 @@ async function issues() {
     displayAllIssues(data.data);
     filterOpenIssues(data.data);
     filterClosedIssues(data.data);
+    upDatecount("all")
 }
 issues()
 
@@ -151,6 +153,7 @@ function filterClosedIssues(closedIss) {
     `
         containerClosed.appendChild(closed)
     })
+    // console.log(containerClosed.children.length);
 
 }
 
@@ -179,3 +182,17 @@ inputSearch.addEventListener('input', () => {
     else{issues()}
 })
 
+const countAll = document.getElementById('count-issues')
+
+function upDatecount(type){
+   if(type === "all"){
+        countAll.innerText = containerAll.children.length
+   }
+   else if(type === "open"){
+        countAll.innerText = containerOpen.children.length
+   }
+   if(type === "closed"){
+        countAll.innerText = containerClosed.children.length
+   }
+}
+// count()

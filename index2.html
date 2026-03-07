@@ -52,8 +52,26 @@
             <button id="open" class="btn">Open</button>
             <button id="closed" class="btn">Closed</button>
         </div>
-
-
+        <!-- count section  -->
+        <div class="p-4 my-4 shadow-xl rounded-xl flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <img class="bg-[#ECE4FF] p-1 rounded-full" src="assets/Aperture.png" alt="">
+                <div class="">
+                    <p id="" class="text-2xl font-bold"> <span id="count-issues">0</span> Issues</p>
+                    <p class="text-[#64748B]"> Track and manage your project issues</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-1">
+                    <p class="w-2 h-2 rounded-full bg-green-600"></p>
+                    <p>Open</p>
+                </div>
+                <div class="flex items-center gap-1">
+                    <p class="w-2 h-2 rounded-full bg-[#A855F7]"></p>
+                    <p>Closed</p>
+                </div>
+            </div>
+        </div>
         <!-- all container  -->
         <div id="containerAll" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 ">
             <!-- <div class="card bg-base-200  shadow-sm">
@@ -87,6 +105,7 @@
         </div>
         <div id="containerClosed" class="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 hidden"></div>
     </section>
+
 
 
     <script src="index2.js"></script>
