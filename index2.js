@@ -28,6 +28,7 @@ issues()
 
 // allContainer 
 function displayAllIssues(issues) {
+    containerAll.innerHTML = '';
     issues.forEach(issuescard => {
         let bordercolor = ""
         let img = '';
@@ -74,6 +75,7 @@ function displayAllIssues(issues) {
 // open container 
 const containerOpen = document.getElementById('containerOpen')
 function filterOpenIssues(open) {
+    containerOpen.innerHTML = '';
     const openIssues = open.filter(issue =>
         issue.status.toLowerCase() === "open"
     );
@@ -115,6 +117,7 @@ function filterOpenIssues(open) {
 
 const containerClosed = document.getElementById('containerClosed')
 function filterClosedIssues(closedIss) {
+    containerClosed.innerHTML = '';
     const closedIsses = closedIss.filter(close => close.status.toLowerCase() === "closed")
     // console.log(closedIsses);
     closedIsses.forEach(closeissues => {
@@ -151,4 +154,28 @@ function filterClosedIssues(closedIss) {
 
 }
 
+// input for search 
+const inputSearch = document.getElementById('issuesInput')
+
+inputSearch.addEventListener('input', () => {
+    const value = inputSearch.value.trim().toLowerCase()
+    // console.log(value);
+    if( value.length > 0){
+    async function search() {
+        const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${value}`)
+        const data = await res.json()
+        const datas = data.data;
+        // console.log(data);
+        const filtered = datas.filter(searchvalue => 
+            searchvalue.title.toLowerCase().includes(value)
+        );
+            displayAllIssues(filtered)
+            filterClosedIssues(filtered)
+            filterOpenIssues(filtered)
+
+    };
+    search()
+    }
+    else{issues()}
+})
 
