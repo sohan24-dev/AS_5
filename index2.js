@@ -1,17 +1,21 @@
 const allbtn = ["all", "open", "closed"];
+let currentTab = "all"
 const allContainer = ["containerAll", "containerOpen", "containerClosed"];
 // Click items 
 allbtn.forEach((clickBtn, index) => {
     document.getElementById(clickBtn).onclick = () => {
+        showSpinner()
+        currentTab = clickBtn
+        upDatecount(currentTab)
         allbtn.forEach(btnRemove =>
             document.getElementById(btnRemove).classList.remove('btn-primary')
         );
         document.getElementById(clickBtn).classList.add('btn-primary');
-        upDatecount(clickBtn)
         allContainer.forEach(show =>
             document.getElementById(show).classList.add("hidden")
         );
         document.getElementById(allContainer[index]).classList.remove("hidden");
+        hideSpinner()
     }
 });
 
@@ -24,13 +28,14 @@ async function issues() {
     displayAllIssues(data.data);
     filterOpenIssues(data.data);
     filterClosedIssues(data.data);
-    upDatecount("all")
+    upDatecount(currentTab)
 }
 issues()
 
 // allContainer 
 function displayAllIssues(issues) {
     containerAll.innerHTML = '';
+    showSpinner()
     issues.forEach(issuescard => {
         let bordercolor = ""
         let img = '';
@@ -71,6 +76,7 @@ function displayAllIssues(issues) {
                 </div>
         `
         containerAll.appendChild(card)
+        hideSpinner()
     })
 }
 
@@ -78,6 +84,7 @@ function displayAllIssues(issues) {
 const containerOpen = document.getElementById('containerOpen')
 function filterOpenIssues(open) {
     containerOpen.innerHTML = '';
+    showSpinner()
     const openIssues = open.filter(issue =>
         issue.status.toLowerCase() === "open"
     );
@@ -111,6 +118,7 @@ function filterOpenIssues(open) {
                 </div>
         `
         containerOpen.appendChild(opens)
+        hideSpinner()
     })
     // console.log(opens);
 };
@@ -120,6 +128,7 @@ function filterOpenIssues(open) {
 const containerClosed = document.getElementById('containerClosed')
 function filterClosedIssues(closedIss) {
     containerClosed.innerHTML = '';
+    showSpinner()
     const closedIsses = closedIss.filter(close => close.status.toLowerCase() === "closed")
     // console.log(closedIsses);
     closedIsses.forEach(closeissues => {
@@ -152,6 +161,7 @@ function filterClosedIssues(closedIss) {
                 </div>
     `
         containerClosed.appendChild(closed)
+        hideSpinner()
     })
     // console.log(containerClosed.children.length);
 
@@ -163,36 +173,50 @@ const inputSearch = document.getElementById('issuesInput')
 inputSearch.addEventListener('input', () => {
     const value = inputSearch.value.trim().toLowerCase()
     // console.log(value);
-    if( value.length > 0){
-    async function search() {
-        const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${value}`)
-        const data = await res.json()
-        const datas = data.data;
-        // console.log(data);
-        const filtered = datas.filter(searchvalue => 
-            searchvalue.title.toLowerCase().includes(value)
-        );
+    if (value.length > 0) {
+        showSpinner()
+        async function search() {
+            const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${value}`)
+            const data = await res.json()
+            const datas = data.data;
+            // console.log(data);
+            const filtered = datas.filter(searchvalue =>
+                searchvalue.title.toLowerCase().includes(value)
+            );
             displayAllIssues(filtered)
+            // upDatecount("all")
             filterClosedIssues(filtered)
             filterOpenIssues(filtered)
-
-    };
-    search()
+            upDatecount(currentTab)
+        };
+        search()
+        hideSpinner()
     }
-    else{issues()}
+    else { issues() }
 })
 
+// count() .............
 const countAll = document.getElementById('count-issues')
 
-function upDatecount(type){
-   if(type === "all"){
+function upDatecount(type) {
+    if (type === "all") {
         countAll.innerText = containerAll.children.length
-   }
-   else if(type === "open"){
+    }
+    else if (type === "open") {
         countAll.innerText = containerOpen.children.length
-   }
-   if(type === "closed"){
+    }
+    else if (type === "closed") {
         countAll.innerText = containerClosed.children.length
-   }
+    }
 }
-// count()
+
+
+// spinner ...............
+
+const spinner = document.getElementById('spinner')
+function showSpinner() {
+    spinner.classList.remove('hidden')
+}
+function hideSpinner() {
+    spinner.classList.add('hidden')
+}
