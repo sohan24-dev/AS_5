@@ -1,21 +1,24 @@
 const allbtn = ["all", "open", "closed"];
 let currentTab = "all"
 const allContainer = ["containerAll", "containerOpen", "containerClosed"];
+const spinner = document.getElementById('spinner')
 // Click items 
 allbtn.forEach((clickBtn, index) => {
     document.getElementById(clickBtn).onclick = () => {
         showSpinner()
-        currentTab = clickBtn
-        upDatecount(currentTab)
-        allbtn.forEach(btnRemove =>
-            document.getElementById(btnRemove).classList.remove('btn-primary')
-        );
-        document.getElementById(clickBtn).classList.add('btn-primary');
-        allContainer.forEach(show =>
-            document.getElementById(show).classList.add("hidden")
-        );
-        document.getElementById(allContainer[index]).classList.remove("hidden");
-        hideSpinner()
+        setTimeout(() => {
+            currentTab = clickBtn
+            upDatecount(currentTab)
+            allbtn.forEach(btnRemove =>
+                document.getElementById(btnRemove).classList.remove('btn-primary')
+            );
+            document.getElementById(clickBtn).classList.add('btn-primary');
+            allContainer.forEach(show =>
+                document.getElementById(show).classList.add("hidden")
+            );
+            document.getElementById(allContainer[index]).classList.remove("hidden");
+            hideSpinner()
+        }, 200);
     }
 });
 
@@ -42,6 +45,7 @@ function displayAllIssues(issues) {
     issues.forEach(issuescard => {
         let bordercolor = ""
         let img = '';
+        let textColor = ''
         if (issuescard.status.toLowerCase() === "open") {
             bordercolor = "border-t-4 border-[#00A96E]"
             img = "assets/Open-Status.png"
@@ -49,6 +53,15 @@ function displayAllIssues(issues) {
         else if (issuescard.status.toLowerCase() === "closed") {
             bordercolor = "border-t-4 border-[#A855F7]"
             img = "assets/Closed- Status .png"
+        }
+        if(issuescard.priority.toLowerCase()=== 'high'){
+            textColor = ('bg-[#FEECEC] text-[#EF4444]')
+        }
+        else if(issuescard.priority.toLowerCase()=== 'medium'){
+            textColor = ('bg-[#FFF6D1] text-[#F59E0B]')
+        }
+        else if(issuescard.priority.toLowerCase()=== 'low'){
+            textColor = ('bg-[#EEEFF2] text-[#9CA3AF]')
         }
         const card = document.createElement('div')
         card.classList = `card bg-base-100 shadow-sm ${bordercolor}`
@@ -58,7 +71,7 @@ function displayAllIssues(issues) {
                         <div class="flex justify-between ">
                         <img src="${img}" alt="">
                             <div><p
-                                class=" font-medium text-xl bg-[#FEECEC] inline-block px-2 py-1 text-[#EF4444] rounded-sm">
+                                class=" font-medium text-xl  inline-block px-2 py-1 ${textColor} rounded-sm">
                                 ${issuescard.priority}</p></div>
                         </div>
                         <h2 class="card-title">
@@ -87,11 +100,21 @@ function displayAllIssues(issues) {
 const containerOpen = document.getElementById('containerOpen')
 function filterOpenIssues(open) {
     containerOpen.innerHTML = '';
-    showSpinner()
+    // showSpinner()
     const openIssues = open.filter(issue =>
         issue.status.toLowerCase() === "open"
     );
     openIssues.forEach(openiss => {
+        let textColor = ''
+         if(openiss.priority.toLowerCase()=== 'high'){
+            textColor = ('bg-[#FEECEC] text-[#EF4444]')
+        }
+        else if(openiss.priority.toLowerCase()=== 'medium'){
+            textColor = ('bg-[#FFF6D1] text-[#F59E0B]')
+        }
+        else if(openiss.priority.toLowerCase()=== 'low'){
+            textColor = ('bg-[#EEEFF2] text-[#9CA3AF]')
+        }
         const opens = document.createElement('div');
         opens.className = "card bg-base-100 shadow-sm border-t-4 border-[#00A96E]";
         opens.innerHTML = `
@@ -100,7 +123,7 @@ function filterOpenIssues(open) {
                         <div class="flex justify-between ">
                         <img src="assets/Open-Status.png" alt="">
                            <div> <p
-                                class=" font-medium text-xl bg-[#FEECEC] inline-block  px-2 py-1 text-[#EF4444] rounded-sm ">
+                                class=" font-medium text-xl inline-block  px-2 py-1 ${textColor} rounded-sm ">
                                 ${openiss.priority}</p></div>
                         </div>
                         <h2 class="card-title">
@@ -121,7 +144,7 @@ function filterOpenIssues(open) {
                 </div>
         `
         containerOpen.appendChild(opens)
-        hideSpinner()
+        // hideSpinner()
     })
     // console.log(opens);
 };
@@ -131,10 +154,20 @@ function filterOpenIssues(open) {
 const containerClosed = document.getElementById('containerClosed')
 function filterClosedIssues(closedIss) {
     containerClosed.innerHTML = '';
-    showSpinner()
+    // showSpinner()
     const closedIsses = closedIss.filter(close => close.status.toLowerCase() === "closed")
     // console.log(closedIsses);
     closedIsses.forEach(closeissues => {
+        let textColor = ''
+         if(closeissues.priority.toLowerCase()=== 'high'){
+            textColor = ('bg-[#FEECEC] text-[#EF4444]')
+        }
+        else if(closeissues.priority.toLowerCase()=== 'medium'){
+            textColor = ('bg-[#FFF6D1] text-[#F59E0B]')
+        }
+        else if(closeissues.priority.toLowerCase()=== 'low'){
+            textColor = ('bg-[#EEEFF2] text-[#9CA3AF]')
+        }
         const closed = document.createElement('div')
         closed.className = "card bg-base-100 shadow-sm border-t-4 border-[#A855F7]"
         closed.innerHTML = `
@@ -143,7 +176,7 @@ function filterClosedIssues(closedIss) {
                         <div class="flex  justify-between ">
                         <img src="assets/Closed- Status .png" alt="">
                             <div><p
-                                class=" font-medium text-xl bg-[#FEECEC] inline-block px-2 py-1 text-[#EF4444] rounded-sm">
+                                class=" font-medium text-xl inline-block px-2 py-1 rounded-sm ${textColor}">
                                 ${closeissues.priority}</p></div>
                         </div>
                         <h2 class="card-title">
@@ -164,7 +197,7 @@ function filterClosedIssues(closedIss) {
                 </div>
     `
         containerClosed.appendChild(closed)
-        hideSpinner()
+        // hideSpinner()
     })
     // console.log(containerClosed.children.length);
 
@@ -191,9 +224,9 @@ inputSearch.addEventListener('input', () => {
             filterClosedIssues(filtered)
             filterOpenIssues(filtered)
             upDatecount(currentTab)
+            hideSpinner()
         };
         search()
-        hideSpinner()
     }
     else { issues() }
 })
@@ -216,12 +249,25 @@ function upDatecount(type) {
 
 // spinner ...............
 
-const spinner = document.getElementById('spinner')
 function showSpinner() {
     spinner.classList.remove('hidden')
+    containerAll.classList.add('hidden')
+    containerOpen.classList.add('hidden')
+    containerClosed.classList.add('hidden')
 }
+
 function hideSpinner() {
     spinner.classList.add('hidden')
+
+    if (currentTab === "all") {
+        containerAll.classList.remove('hidden')
+    }
+    else if (currentTab === "open") {
+        containerOpen.classList.remove('hidden')
+    }
+    else if (currentTab === "closed") {
+        containerClosed.classList.remove('hidden')
+    }
 }
 
 // Model details ......................................
@@ -247,12 +293,12 @@ async function OpenDetails(issueId) {
     modelStatus.textContent = Modeldetail.status
     modelName.textContent = Modeldetail.author
     modelDate.textContent = Modeldetail.createdAt
-    modelLabels1.textContent = Modeldetail.labels[0] 
-    modelLabels2.innerHTML = Modeldetail.labels[1] ? `<p class="badge badge-outline text-[#D97706] bg-[#FFF8DB]">${Modeldetail.labels[1]}</p>`:''  
+    modelLabels1.textContent = Modeldetail.labels[0]
+    modelLabels2.innerHTML = Modeldetail.labels[1] ? `<p class="badge badge-outline text-[#D97706] bg-[#FFF8DB]">${Modeldetail.labels[1]}</p>` : ''
     modelDes.textContent = Modeldetail.description
     modelAss.textContent = Modeldetail.assignee
     modelprio.textContent = Modeldetail.priority
     issueModel.showModal()
 
 }
-// console.log(modelLabels2.innerHTML);
+

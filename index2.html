@@ -45,7 +45,7 @@
             <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Issue</button>
         </div>
     </header>
-    <dialog id="issues-details-modal" class="modal">
+    <dialog id="issues-details-modal" class="modal p-5">
         <div class="modea-box bg-white shadow-2xl rounded-2xl space-y-3.5 p-5">
             <h2 id="modeltitle" class="font-bold text-3xl"></h2>
             <div class="flex items-center gap-2">
@@ -65,12 +65,16 @@
                 Need to fix the
                 responsive behavior.</p>
 
-            <div class="flex shadow-xl gap-9 items-center bg-[#F8FAFC] p-4 rounded-2xl">
-                <div class="">
-                    <p id="modelAss">name </p>
-                </div>
-                <div class="">
-                    <div id="modelprio" class="badge badge-outline text-[#D97706] bg-[#FFF8DB]">Products</div>
+            <div class=" shadow-xl items-center bg-[#F8FAFC] p-4 rounded-2xl">
+                <div class="w-3/5 flex items-center justify-between ">
+                    <div class="">
+                        <p class="text-[#64748B] py-3">Assignee:</p>
+                        <p id="modelAss">name </p>
+                    </div>
+                    <div class="">
+                        <p class="text-[#64748B] py-3">Priority</p>
+                        <div id="modelprio" class="badge badge-outline text-white bg-[#EF4444]">Products</div>
+                    </div>
                 </div>
             </div>
             <div class="flex justify-end"> <button class="btn btn-primary"
@@ -79,7 +83,7 @@
     </dialog>
     <section class="w-10/12 mx-auto mb-5">
         <!-- 3 button  -->
-        <div class="allTabs m-4">
+        <div class="allTabs my-4 bg-white shadow-2xl p-4 rounded-xl">
             <button id="all" class="btn btn-primary">All</button>
             <button id="open" class="btn">Open</button>
             <button id="closed" class="btn">Closed</button>
@@ -104,6 +108,8 @@
                 </div>
             </div>
         </div>
+        <div id="spinner" class="flex justify-center items-center m-3 hidden"><span
+                class="loading loading-ring loading-xl w-25 bg-blue-500"></span></div>
         <!-- all container  -->
         <div id="containerAll" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 ">
             <!-- <div class="card bg-base-200  shadow-sm">
@@ -138,8 +144,7 @@
         <div id="containerClosed" class="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 hidden"></div>
 
     </section>
-    <div id="spinner" class="flex justify-center items-center m-3 hidden"><span
-            class="loading loading-ring loading-xl w-25 bg-blue-500"></span></div>
+
 
 
     <script src="index2.js"></script>
