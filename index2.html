@@ -45,6 +45,38 @@
             <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Issue</button>
         </div>
     </header>
+    <dialog id="issues-details-modal" class="modal">
+        <div class="modea-box bg-white shadow-2xl rounded-2xl space-y-3.5 p-5">
+            <h2 id="modeltitle" class="font-bold text-3xl"></h2>
+            <div class="flex items-center gap-2">
+                <p id="modelStatus" class="bg-[#00A96E] font-medium text-[#FFFFFF] py-1 px-2  rounded-2xl">Opened</p>
+                <div class="flex items-center gap-1"><span class="w-2 h-2 bg-[#64748B] rounded-full"></span>
+                    <p id="modelName" class="text-[#64748B]">Opened by Fahim Ahmed</p>
+                </div>
+                <div class="flex items-center gap-1"><span class="w-2 h-2 bg-[#64748B] rounded-full"></span>
+                    <p id="modelDate" class="text-[#64748B]">Opened by Fahim Ahmed</p>
+                </div>
+            </div>
+            <div class="card-actions justify-left">
+                <div id="modelLabels1" class="badge badge-outline bg-[#FEECEC] text-[#EF4444]">Fashion</div>
+                <div id="modelLabels2" class=""></div>
+            </div>
+            <p id="modelDes" class="text-[#64748B]">The navigation menu doesn't collapse properly on mobile devices.
+                Need to fix the
+                responsive behavior.</p>
+
+            <div class="flex shadow-xl gap-9 items-center bg-[#F8FAFC] p-4 rounded-2xl">
+                <div class="">
+                    <p id="modelAss">name </p>
+                </div>
+                <div class="">
+                    <div id="modelprio" class="badge badge-outline text-[#D97706] bg-[#FFF8DB]">Products</div>
+                </div>
+            </div>
+            <div class="flex justify-end"> <button class="btn btn-primary"
+                    onclick="document.getElementById('issues-details-modal').close()">Close</button></div>
+        </div>
+    </dialog>
     <section class="w-10/12 mx-auto mb-5">
         <!-- 3 button  -->
         <div class="allTabs m-4">
@@ -104,8 +136,10 @@
 
         </div>
         <div id="containerClosed" class="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 hidden"></div>
+
     </section>
-     <div id="spinner" class="flex justify-center items-center m-3 hidden"><span class="loading loading-ring loading-xl w-25 bg-blue-500"></span></div>
+    <div id="spinner" class="flex justify-center items-center m-3 hidden"><span
+            class="loading loading-ring loading-xl w-25 bg-blue-500"></span></div>
 
 
     <script src="index2.js"></script>

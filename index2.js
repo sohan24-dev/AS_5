@@ -29,8 +29,11 @@ async function issues() {
     filterOpenIssues(data.data);
     filterClosedIssues(data.data);
     upDatecount(currentTab)
+    // console.log(data.data.id);
 }
 issues()
+
+
 
 // allContainer 
 function displayAllIssues(issues) {
@@ -50,7 +53,7 @@ function displayAllIssues(issues) {
         const card = document.createElement('div')
         card.classList = `card bg-base-100 shadow-sm ${bordercolor}`
         card.innerHTML = `
-                <div class="">
+                <div class="" onclick="OpenDetails(${issuescard.id})">
                     <div class="card-body space-y-2">
                         <div class="flex justify-between ">
                         <img src="${img}" alt="">
@@ -92,7 +95,7 @@ function filterOpenIssues(open) {
         const opens = document.createElement('div');
         opens.className = "card bg-base-100 shadow-sm border-t-4 border-[#00A96E]";
         opens.innerHTML = `
-                <div class="">
+                <div class="" onclick="OpenDetails(${openiss.id})">
                     <div class="card-body space-y-2">
                         <div class="flex justify-between ">
                         <img src="assets/Open-Status.png" alt="">
@@ -135,7 +138,7 @@ function filterClosedIssues(closedIss) {
         const closed = document.createElement('div')
         closed.className = "card bg-base-100 shadow-sm border-t-4 border-[#A855F7]"
         closed.innerHTML = `
-       <div class="">
+       <div class="" onclick="OpenDetails(${closeissues.id})">
                     <div class="card-body space-y-2">
                         <div class="flex  justify-between ">
                         <img src="assets/Closed- Status .png" alt="">
@@ -220,3 +223,36 @@ function showSpinner() {
 function hideSpinner() {
     spinner.classList.add('hidden')
 }
+
+// Model details ......................................
+const issueModel = document.getElementById('issues-details-modal')
+const modeltitle = document.getElementById('modeltitle')
+const modelStatus = document.getElementById('modelStatus')
+const modelName = document.getElementById('modelName')
+const modelDate = document.getElementById('modelDate')
+const modelLabels1 = document.getElementById('modelLabels1')
+const modelLabels2 = document.getElementById('modelLabels2')
+const modelDes = document.getElementById('modelDes')
+const modelAss = document.getElementById('modelAss')
+const modelprio = document.getElementById('modelprio')
+
+
+
+async function OpenDetails(issueId) {
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${issueId}`)
+    const data = await res.json()
+    // console.log(data.data);
+    const Modeldetail = data.data;
+    modeltitle.textContent = Modeldetail.title
+    modelStatus.textContent = Modeldetail.status
+    modelName.textContent = Modeldetail.author
+    modelDate.textContent = Modeldetail.createdAt
+    modelLabels1.textContent = Modeldetail.labels[0] 
+    modelLabels2.innerHTML = Modeldetail.labels[1] ? `<p class="badge badge-outline text-[#D97706] bg-[#FFF8DB]">${Modeldetail.labels[1]}</p>`:''  
+    modelDes.textContent = Modeldetail.description
+    modelAss.textContent = Modeldetail.assignee
+    modelprio.textContent = Modeldetail.priority
+    issueModel.showModal()
+
+}
+// console.log(modelLabels2.innerHTML);
